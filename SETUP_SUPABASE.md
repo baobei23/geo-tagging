@@ -47,7 +47,7 @@ WITH CHECK (true);
 1. Buka **Storage** di sidebar Supabase
 2. Klik "Create bucket"
 3. Nama bucket: `fotos`
-4. Biarkan "Public bucket" **UNCHECKED** (private)
+4. **Pilih "Public bucket"** ✅ (untuk akses langsung)
 5. Klik "Create bucket"
 
 ### 4. Setup Storage Policy
@@ -55,10 +55,16 @@ WITH CHECK (true);
 Di **Storage > fotos > Policies**, buat policy baru:
 
 ```sql
--- Policy untuk upload dan read foto
-CREATE POLICY "Allow all operations on fotos bucket" ON storage.objects
-FOR ALL USING (bucket_id = 'fotos')
-WITH CHECK (bucket_id = 'fotos');
+-- Policy untuk public bucket (lebih sederhana)
+CREATE POLICY "Public Access" ON storage.objects
+FOR SELECT USING (bucket_id = 'fotos');
+
+CREATE POLICY "Authenticated Upload" ON storage.objects
+FOR INSERT WITH CHECK (bucket_id = 'fotos');
+
+-- Jika ingin semua orang bisa upload (tidak recommended):
+-- CREATE POLICY "Public Upload" ON storage.objects
+-- FOR INSERT WITH CHECK (bucket_id = 'fotos');
 ```
 
 ### 5. Dapatkan Credentials

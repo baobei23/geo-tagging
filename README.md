@@ -35,9 +35,6 @@ cp .env.example .env
 # Edit .env dan isi dengan credentials Supabase Anda
 ```
 
-**Opsi B: Edit langsung di code**
-Edit file `lib/supabase.ts` dan ganti fallback values dengan kredensial Supabase Anda.
-
 ### 3. Install Dependencies
 
 ```bash
@@ -185,7 +182,3 @@ Fitur yang bisa ditambahkan:
 - Dark mode
 
 ---
-
-**🎯 MVP Status: ✅ READY TO USE**
-
-Aplikasi siap digunakan untuk demo dan testing. Pastikan Supabase sudah dikonfigurasi dengan benar sebelum testing.

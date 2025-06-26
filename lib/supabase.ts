@@ -47,6 +47,45 @@ export interface UsahaFoto {
   photo_url: string;
 }
 
+// Helper function untuk upload foto dan generate public URL
+export const uploadPhotoToStorage = async (
+  photoUri: string,
+  fileName: string
+): Promise<{ url: string | null; error: string | null }> => {
+  try {
+    // Upload foto
+    const response = await fetch(photoUri);
+    const blob = await response.blob();
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("fotos")
+      .upload(fileName, blob, {
+        contentType: "image/jpeg",
+      });
+
+    if (uploadError) {
+      return { url: null, error: uploadError.message };
+    }
+
+    // Generate public URL
+    const { data: urlData } = supabase.storage
+      .from("fotos")
+      .getPublicUrl(fileName);
+
+    // Validasi URL
+    if (!urlData.publicUrl) {
+      return { url: null, error: "Failed to generate public URL" };
+    }
+
+    return { url: urlData.publicUrl, error: null };
+  } catch (error) {
+    return {
+      url: null,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+};
+
 // Helper function untuk test koneksi Supabase
 export const testSupabaseConnection = async (): Promise<boolean> => {
   try {
