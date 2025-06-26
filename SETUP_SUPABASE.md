@@ -76,10 +76,6 @@ FOR INSERT WITH CHECK (bucket_id = 'fotos');
 
 ### 6. Konfigurasi Credentials Aplikasi
 
-Ada 2 cara untuk mengkonfigurasi credentials Supabase:
-
-#### **Opsi A: Environment Variables (Recommended)**
-
 1. Copy file `.env.example` ke `.env`:
 
    ```bash
@@ -91,24 +87,6 @@ Ada 2 cara untuk mengkonfigurasi credentials Supabase:
    EXPO_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
    EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
    ```
-
-#### **Opsi B: Edit Langsung di Code**
-
-Edit file `lib/supabase.ts` dan ganti fallback values:
-
-```typescript
-const supabaseUrl = getEnvVar(
-  "EXPO_PUBLIC_SUPABASE_URL",
-  "https://YOUR_PROJECT_ID.supabase.co" // <- Ganti ini
-);
-
-const supabaseAnonKey = getEnvVar(
-  "EXPO_PUBLIC_SUPABASE_ANON_KEY",
-  "YOUR_ANON_KEY_HERE" // <- Ganti ini
-);
-```
-
-**💡 Tip:** Environment variables lebih aman karena credentials tidak ter-commit ke git.
 
 ## 🔧 Development Setup
 
