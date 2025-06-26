@@ -33,6 +33,25 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Aplikasi ini memerlukan akses kamera untuk mengambil foto usaha."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Aplikasi ini memerlukan akses lokasi untuk menandai geo-tag pada foto usaha."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Aplikasi ini memerlukan akses galeri untuk menyimpan foto yang diambil.",
+          "savePhotosPermission": "Aplikasi ini memerlukan izin untuk menyimpan foto ke galeri."
+        }
       ]
     ],
     "experiments": {
