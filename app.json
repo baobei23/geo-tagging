@@ -2,16 +2,8 @@
   "expo": {
     "extra": {
       "eas": {
-        "projectId": "7ed96b58-ffc5-4d1a-98e7-648867a2cba8"
+        "projectId": "6d3a63ed-5ebf-4808-8215-6855cda1571e"
       }
-    },
-    "android": {
-      "package": "com.wolfgang23.geotagging",
-      "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.READ_EXTERNAL_STORAGE"
-      ]
     }
   }
 }
