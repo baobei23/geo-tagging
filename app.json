@@ -27,6 +27,9 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
