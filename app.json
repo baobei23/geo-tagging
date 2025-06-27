@@ -4,6 +4,20 @@
       "eas": {
         "projectId": "6d3a63ed-5ebf-4808-8215-6855cda1571e"
       }
-    }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/6d3a63ed-5ebf-4808-8215-6855cda1571e"
+    },
+    "android": {
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.READ_EXTERNAL_STORAGE"
+      ]
+    },
+    "ios": {}
   }
 }
