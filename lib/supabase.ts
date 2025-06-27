@@ -20,6 +20,11 @@ const supabaseAnonKey = getEnvVar(
   "your-anon-key-here"
 );
 
+// DEBUG: Console log untuk debugging di build
+console.log("🔍 DEBUG Environment Variables:");
+console.log("📍 EXPO_PUBLIC_SUPABASE_URL:", supabaseUrl);
+console.log("🔑 EXPO_PUBLIC_SUPABASE_ANON_KEY:", supabaseAnonKey?.substring(0, 20) + "...");
+
 // Validasi URL format
 if (
   !supabaseUrl.startsWith("https://") ||
