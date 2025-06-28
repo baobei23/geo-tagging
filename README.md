@@ -133,7 +133,7 @@ geo-tagging/
 
 ### Testing
 
-Untuk test fitur kamera dan lokasi, gunakan **physical device** karena simulator/emulator memiliki keterbatasan.
+Untuk test fitur kamera dan lokasi, gunakan **physical device** karena simulator/emulator tidak memiliki kamera.
 
 ## 🐛 Troubleshooting
 

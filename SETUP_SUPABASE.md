@@ -88,47 +88,6 @@ FOR INSERT WITH CHECK (bucket_id = 'fotos');
    EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
    ```
 
-## 🔧 Development Setup
-
-### Install Dependencies
-
-```bash
-npm install expo-camera expo-location @supabase/supabase-js expo-media-library
-```
-
-### Update Permissions (sudah dikonfigurasi di app.json)
-
-✅ Camera permission
-✅ Location permission  
-✅ Media library permission
-
-## 🎯 Testing
-
-### 1. Jalankan Aplikasi
-
-```bash
-npx expo start
-```
-
-### 2. Test Flow
-
-1. Buka aplikasi → Kamera muncul
-2. Ambil foto → Form input muncul
-3. Isi "Nama Penginput" dan "Nama Usaha"
-4. Klik "Simpan" → Data tersimpan
-
-### 3. Verifikasi Data
-
-**Database:**
-
-- Buka **Table Editor > usaha_foto**
-- Data baru harus muncul dengan semua field terisi
-
-**Storage:**
-
-- Buka **Storage > fotos**
-- File foto baru harus tersimpan
-
 ## 🛠 Troubleshooting
 
 ### Error "Invalid API key"
