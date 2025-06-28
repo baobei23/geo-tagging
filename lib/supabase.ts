@@ -1,41 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Validasi environment variables
-const getEnvVar = (name: string, fallback?: string): string => {
-  const value = process.env[name];
-  if (!value && !fallback) {
-    throw new Error(`Environment variable ${name} is required`);
-  }
-  return value || fallback || "";
-};
+// Konfigurasi Supabase
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
-// Konfigurasi Supabase menggunakan environment variables
-const supabaseUrl = getEnvVar(
-  "EXPO_PUBLIC_SUPABASE_URL",
-  "https://your-project-id.supabase.co"
-);
-
-const supabaseAnonKey = getEnvVar(
-  "EXPO_PUBLIC_SUPABASE_ANON_KEY",
-  "your-anon-key-here"
-);
-
-// DEBUG: Console log untuk debugging di build
-console.log("🔍 DEBUG Environment Variables:");
-console.log("📍 EXPO_PUBLIC_SUPABASE_URL:", supabaseUrl);
-console.log("🔑 EXPO_PUBLIC_SUPABASE_ANON_KEY:", supabaseAnonKey?.substring(0, 20) + "...");
-
-// Validasi URL format
-if (
-  !supabaseUrl.startsWith("https://") ||
-  supabaseUrl.includes("your-project-id")
-) {
-  console.warn("⚠️  Supabase URL belum dikonfigurasi dengan benar!");
-  console.warn("📝 Edit lib/supabase.ts atau setup environment variables:");
-  console.warn(
-    "   EXPO_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co"
-  );
-  console.warn("   EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here");
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Supabase URL and Anon Key must be provided in .env file");
 }
 
 // Buat Supabase client
@@ -52,41 +22,37 @@ export interface UsahaFoto {
   photo_url: string;
 }
 
-// Helper function untuk upload foto dan generate public URL
+// Helper function untuk upload foto
 export const uploadPhotoToStorage = async (
   photoUri: string,
   fileName: string
 ): Promise<{ url: string | null; error: string | null }> => {
   try {
-    // Upload foto
+    // Konversi URI ke blob
     const response = await fetch(photoUri);
     const blob = await response.blob();
 
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    // Upload ke Supabase storage
+    const { data, error } = await supabase.storage
       .from("fotos")
       .upload(fileName, blob, {
         contentType: "image/jpeg",
       });
 
-    if (uploadError) {
-      return { url: null, error: uploadError.message };
+    if (error) {
+      return { url: null, error: error.message };
     }
 
-    // Generate public URL
+    // Dapatkan public URL
     const { data: urlData } = supabase.storage
       .from("fotos")
       .getPublicUrl(fileName);
-
-    // Validasi URL
-    if (!urlData.publicUrl) {
-      return { url: null, error: "Failed to generate public URL" };
-    }
 
     return { url: urlData.publicUrl, error: null };
   } catch (error) {
     return {
       url: null,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? error.message : "Upload gagal",
     };
   }
 };
