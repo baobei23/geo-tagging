@@ -1,4 +1,5 @@
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
+import * as FileSystem from "expo-file-system";
 import * as Location from "expo-location";
 import * as MediaLibrary from "expo-media-library";
 import React, { useEffect, useRef, useState } from "react";
@@ -126,13 +127,14 @@ export default function CameraScreen() {
       const timestamp = new Date().getTime();
       const fileName = `foto_${timestamp}.jpg`;
 
-      // Upload foto ke Supabase Storage
-      const response = await fetch(capturedPhoto);
-      const blob = await response.blob();
+      // Upload foto ke Supabase Storage menggunakan FileSystem (lebih reliable untuk Android)
+      const base64 = await FileSystem.readAsStringAsync(capturedPhoto, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
 
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("fotos")
-        .upload(fileName, blob, {
+        .upload(fileName, decode(base64), {
           contentType: "image/jpeg",
         });
 
@@ -187,6 +189,16 @@ export default function CameraScreen() {
     setCapturedPhoto(null);
     setCurrentLocation(null);
     setFormData({ nama_penginput: "", nama_usaha: "" });
+  };
+
+  // Helper function to decode base64
+  const decode = (base64: string) => {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
   };
 
   if (!permission) {
