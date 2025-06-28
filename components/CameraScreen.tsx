@@ -220,33 +220,34 @@ export default function CameraScreen() {
 
   return (
     <View style={styles.container}>
-      <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
-        <View style={styles.cameraControls}>
-          <TouchableOpacity
-            style={styles.flipButton}
-            onPress={() =>
-              setFacing((current) => (current === "back" ? "front" : "back"))
-            }
-          >
-            <Text style={styles.buttonText}>Flip</Text>
-          </TouchableOpacity>
+      <CameraView ref={cameraRef} style={styles.camera} facing={facing} />
 
-          <TouchableOpacity
-            style={[
-              styles.captureButton,
-              loading && styles.captureButtonDisabled,
-            ]}
-            onPress={takePicture}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text style={styles.captureButtonText}>📷</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-      </CameraView>
+      {/* Camera Controls Overlay dengan Absolute Positioning */}
+      <View style={styles.cameraControls}>
+        <TouchableOpacity
+          style={styles.flipButton}
+          onPress={() =>
+            setFacing((current) => (current === "back" ? "front" : "back"))
+          }
+        >
+          <Text style={styles.buttonText}>Flip</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.captureButton,
+            loading && styles.captureButtonDisabled,
+          ]}
+          onPress={takePicture}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={styles.captureButtonText}>📷</Text>
+          )}
+        </TouchableOpacity>
+      </View>
 
       {/* Modal Form Input */}
       <Modal
@@ -333,7 +334,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cameraControls: {
-    flex: 1,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
